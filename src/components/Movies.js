@@ -29,6 +29,7 @@ const Content = styled.div`
 display: grid;
 grid-gap: 25px;
 grid-template-columns: repeat(4,minmax(0,1fr));
+margin-bottom: 40px;
 `
 const Wrap = styled.div`
 border-radius: 10px;
@@ -42,6 +43,7 @@ img{
     object-fit: cover;
 }
 &:hover{
+    cursor: pointer;
     transform: scale(1.05);
     border: 3px solid rgba(249,249,249,0.8);
 }
