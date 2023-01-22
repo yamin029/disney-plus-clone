@@ -39,10 +39,12 @@ const Header = () => {
 export default Header
 
 const Nav = styled.nav`
+overflow-x: hidden;
 height:70px;
 background: #090b13;
 display: flex;
 align-items: center;
+justify-content: center;
 padding: 0 36px;
 `
 const Logo = styled.img`
@@ -54,6 +56,7 @@ display: flex;
 flex: 1;
 margin-left: 25px;
 align-items: center;
+justify-content: center;
 a{
   display: flex;
   align-items: center;
