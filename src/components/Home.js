@@ -1,17 +1,32 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import ImageSlider from './ImageSlider'
 import Movies from './Movies'
 import Viewers from './Viewers'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { moviesAsync } from '../features/movie/movieSlice'
+import { onSnapshot, collection } from 'firebase/firestore';
+import db from '../firebase'
+import { setMovies, setLoading } from '../features/movie/movieSlice'
 
 const Home = () => {
   const dispatch = useDispatch()
-
+  const [error, setError] = useState(null);
+  // const loading = useSelector(setLoading)
   useEffect(() => {
+    onSnapshot(
+      collection(db, "movies"),
+      (snapshot) => {
+        let tempMovies = snapshot.docs.map(doc => {
+          return { id: doc.id, ...doc.data() }
+        })
+        dispatch(setMovies(tempMovies))
+      },
+      (error) => {
+        console.log(error)
+      })
     dispatch(moviesAsync())
-    setTimeout(()=>{},2000)
+
   });
   return (
     <Container>

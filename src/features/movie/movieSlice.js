@@ -5,18 +5,17 @@ import { collection, getDocs } from "firebase/firestore";
 
 const initialState = {
     movies: [],
-    status: 'idle'
+    status: 'idle',
+    loading: false
 }
 
 export const moviesAsync = createAsyncThunk(
     'movie/fetchMovies',
     async () => {
-        // console.log('async thunk called')
         let value = []
         const querySnapshot = await getDocs(collection(db, "movies"));
         querySnapshot.forEach((doc) => {
-            // console.log('doc.data()')
-            value = [...value, { id: doc.id, ...doc.data()}];
+            value = [...value, { id: doc.id, ...doc.data() }];
         });
         return value
     }
@@ -26,7 +25,12 @@ export const movieSlice = createSlice({
     name: 'movie',
     initialState,
     reducers: {
-
+        setMovies: (state, action) => {
+            state.movies = action.payload
+        },
+        setLoading: (state) => {
+            state.loading = !state.loading
+        }
     },
     extraReducers: (builder) => {
         builder.addCase(moviesAsync.pending, (state) => {
@@ -39,7 +43,10 @@ export const movieSlice = createSlice({
     }
 })
 
+export const { setMovies, setLoading } = movieSlice.actions
 export const selectMovie = (state) => state.movie.movies
 export const selectStatus = (state) => state.movie.status
+export const selectLoading = (state) => state.movie.loading
+
 
 export default movieSlice.reducer

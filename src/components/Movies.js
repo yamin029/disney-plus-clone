@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { selectMovie, selectStatus } from '../features/movie/movieSlice'
 import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 const Movies = () => {
     const status = useSelector(selectStatus);
@@ -10,14 +11,14 @@ const Movies = () => {
         <Container>
             <h1>Recommended for you </h1>
             <Content>
-                {status === 'loading' && (<h1>Loading...</h1>)}
+                {/* {status === 'loading' && (<h1>Loading...</h1>)} */}
                 {movies && (
                     movies.map((movie) => (
-                        <a href="/detail" key={movie.id}>
+                        <Link to={`detail/${movie.id}`} key={movie.id}>
                             <Wrap >
                                 <img src={movie.CardImg} alt="movie" />
                             </Wrap>
-                        </a>
+                        </Link>
                     ))
                 )}
             </Content>

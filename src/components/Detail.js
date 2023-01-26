@@ -1,37 +1,65 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
+import { doc, getDoc} from "firebase/firestore";
+import db from '../firebase'
+import { async } from '@firebase/util';
+
 
 const Detail = () => {
+    const { id } = useParams()
+    const [movie, setMovie] = useState(null);
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
+        const getDocById = async () => {
+            try {
+                setLoading(true);
+                const ref = doc(db, 'movies', id)
+                const docSnap = await getDoc(ref)
+                setMovie(docSnap.data())
+                setLoading(false);
+            } catch (error) {
+                setError(error);
+                setLoading(false);
+            }
+        }
+        getDocById()
+    }, [id])
     return (
         <Container>
-            <Background>
-                <img src="images/movie-detail.jpg" alt="" />
-            </Background>
-            <ImageTitle>
-                <img src="images/bau.png" alt="movie" />
-            </ImageTitle>
-            <Controls>
-                <PlayButton>
-                    <img src="images/play-icon-black.png" alt="play_button" />
-                    <span>PLAY</span>
-                </PlayButton>
-                <TrailerButton>
-                    <img src="images/play-icon-white.png" alt="tailer_button" />
-                    <span>TRAILER</span>
-                </TrailerButton>
-                <AddButton>
-                    <span>+</span>
-                </AddButton>
-                <GroupButton>
-                    <img src="images/group-icon.png" alt="" />
-                </GroupButton>
-            </Controls>
-            <SubTitle>
-                2018 7m Family, Fantasy, Kids, Animation
-            </SubTitle>
-            <Description>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates odio at sapiente hic, vero quos magni fugit, nam aperiam minima quisquam. Similique magnam quidem rerum odit ipsam laudantium quod? Quod!
-            </Description>
+            {loading ? <h1>Loading....</h1> :
+                <div>
+                    <Background>
+                        <img src={movie.BackgroundImg} alt="" />
+                    </Background>
+                    <ImageTitle>
+                        <img src={movie.TitleImg} alt="movie" />
+                    </ImageTitle>
+                    <Controls>
+                        <PlayButton>
+                            <img src="/images/play-icon-black.png" alt="play_button" />
+                            <span>PLAY</span>
+                        </PlayButton>
+                        <TrailerButton>
+                            <img src="/images/play-icon-white.png" alt="tailer_button" />
+                            <span>TRAILER</span>
+                        </TrailerButton>
+                        <AddButton>
+                            <span>+</span>
+                        </AddButton>
+                        <GroupButton>
+                            <img src="/images/group-icon.png" alt="" />
+                        </GroupButton>
+                    </Controls>
+                    <SubTitle>
+                        {movie.Genres}
+                    </SubTitle>
+                    <Description>
+                        {movie.Description}
+                    </Description>
+                </div>
+            }
         </Container>
     )
 }
@@ -59,8 +87,8 @@ img{
 }
 `
 const ImageTitle = styled.div`
-height: 30vh;
-width: 30vw;
+height: auto;
+width: 40vw;
 min-height: 170px;
 img{
     width: 100%;

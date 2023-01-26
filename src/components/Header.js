@@ -4,34 +4,36 @@ import styled from 'styled-components'
 const Header = () => {
   return (
     <Nav>
-      <Logo src='./images/logo.svg'></Logo>
+      <a href="/">
+        <Logo src='/images/logo.svg'></Logo>
+      </a>
       <NavMenu>
-        <a href="#">
-          <img src="./images/home-icon.svg" alt="home" />
+        <a href="/">
+          <img src="/images/home-icon.svg" alt="home" />
           <span>HOME</span>
         </a>
-        <a href="#">
-          <img src="./images/search-icon.svg" alt="home" />
+        <a href="/">
+          <img src="/images/search-icon.svg" alt="home" />
           <span>SEARCH</span>
         </a>
-        <a href="#">
-          <img src="./images/watchlist-icon.svg" alt="home" />
+        <a href="/">
+          <img src="/images/watchlist-icon.svg" alt="home" />
           <span>WATECHLIST</span>
         </a>
-        <a href="#">
-          <img src="./images/original-icon.svg" alt="home" />
+        <a href="/">
+          <img src="/images/original-icon.svg" alt="home" />
           <span>ORIGINAL</span>
         </a>
-        <a href="#">
-          <img src="./images/movie-icon.svg" alt="home" />
+        <a href="/">
+          <img src="/images/movie-icon.svg" alt="home" />
           <span>MOVIES</span>
         </a>
-        <a href="#">
-          <img src="./images/series-icon.svg" alt="home" />
+        <a href="/">
+          <img src="/images/series-icon.svg" alt="home" />
           <span>SERIES</span>
         </a>
       </NavMenu>
-      <UserImage src="./images/rmbg-yamin.png" alt="home" />
+      <UserImage src="/images/rmbg-yamin.png" alt="home" />
     </Nav>
   )
 }
@@ -49,7 +51,7 @@ padding: 0 36px;
 `
 const Logo = styled.img`
 width: 80px;
-
+cursor: pointer;
 `
 const NavMenu = styled.div`
 display: flex;
@@ -97,4 +99,9 @@ height: 40px;
 width: 40px;
 border-radius: 50%;
 cursor: pointer;
+position: relative;
+display: block;
+&:hover{
+  border: 1px solid white;
+}
 `
