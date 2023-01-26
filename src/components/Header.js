@@ -81,7 +81,7 @@ a{
     bottom: -6px;
     opacity: 1;
     transform: scaleX(0);
-    transform-origin: right center;
+    transform-origin: center;
     transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, .94) 0s;
   }
   }

@@ -1,23 +1,25 @@
 import React from 'react'
 import styled from 'styled-components'
+import { selectMovie, selectStatus } from '../features/movie/movieSlice'
+import { useSelector } from 'react-redux'
 
 const Movies = () => {
+    const status = useSelector(selectStatus);
+    const movies = useSelector(selectMovie);
     return (
         <Container>
-            <h4>Recommended for you</h4>
+            <h1>Recommended for you </h1>
             <Content>
-                <Wrap>
-                    <img src="./images/login-background.jpg" alt="movie" />
-                </Wrap>
-                <Wrap>
-                    <img src="./images/login-background.jpg" alt="movie" />
-                </Wrap>
-                <Wrap>
-                    <img src="./images/login-background.jpg" alt="movie" />
-                </Wrap>
-                <Wrap>
-                    <img src="./images/login-background.jpg" alt="movie" />
-                </Wrap>
+                {status === 'loading' && (<h1>Loading...</h1>)}
+                {movies && (
+                    movies.map((movie) => (
+                        <a href="/detail" key={movie.id}>
+                            <Wrap >
+                                <img src={movie.CardImg} alt="movie" />
+                            </Wrap>
+                        </a>
+                    ))
+                )}
             </Content>
         </Container>
     )
@@ -26,12 +28,14 @@ const Movies = () => {
 export default Movies
 const Container = styled.div``
 const Content = styled.div`
+height: 100%;
 display: grid;
-grid-gap: 25px;
-grid-template-columns: repeat(4,minmax(0,1fr));
+grid-gap: 1rem;
+grid-template-columns: repeat(6,minmax(0,1fr));
 margin-bottom: 40px;
 `
 const Wrap = styled.div`
+height: 100%;
 border-radius: 10px;
 overflow: hidden;
 border: 3px solid rgba(249,249,249,0.1);
@@ -40,7 +44,7 @@ transition-duration: 600ms;
 img{
     height: 100%;
     width: 100%;
-    object-fit: cover;
+    object-fit: fill;
 }
 &:hover{
     cursor: pointer;

@@ -1,10 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import ImageSlider from './ImageSlider'
 import Movies from './Movies'
 import Viewers from './Viewers'
+import { useDispatch } from 'react-redux'
+import { moviesAsync } from '../features/movie/movieSlice'
 
 const Home = () => {
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(moviesAsync())
+    setTimeout(()=>{},2000)
+  });
   return (
     <Container>
       <ImageSlider></ImageSlider>
