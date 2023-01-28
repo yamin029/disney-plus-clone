@@ -3,13 +3,12 @@ import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { doc, getDoc} from "firebase/firestore";
 import db from '../firebase'
-import { async } from '@firebase/util';
 
 
 const Detail = () => {
     const { id } = useParams()
     const [movie, setMovie] = useState(null);
-    const [error, setError] = useState(null);
+    // const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
     useEffect(() => {
         const getDocById = async () => {
@@ -20,7 +19,7 @@ const Detail = () => {
                 setMovie(docSnap.data())
                 setLoading(false);
             } catch (error) {
-                setError(error);
+                // setError(error);
                 setLoading(false);
             }
         }

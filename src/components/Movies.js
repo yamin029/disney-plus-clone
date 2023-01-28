@@ -1,17 +1,17 @@
 import React from 'react'
 import styled from 'styled-components'
-import { selectMovie, selectStatus } from '../features/movie/movieSlice'
+import { selectMovie } from '../features/movie/movieSlice'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-const Movies = () => {
-    const status = useSelector(selectStatus);
+const Movies = ({ error, loading }) => {
     const movies = useSelector(selectMovie);
     return (
         <Container>
-            <h1>Recommended for you </h1>
+            <h3>Recommended for you </h3>
             <Content>
-                {/* {status === 'loading' && (<h1>Loading...</h1>)} */}
+                {loading && (<h1>Loading...</h1>)}
+                {error && (<h1>{error}</h1>)}
                 {movies && (
                     movies.map((movie) => (
                         <Link to={`detail/${movie.id}`} key={movie.id}>

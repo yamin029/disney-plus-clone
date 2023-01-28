@@ -3,17 +3,17 @@ import styled from 'styled-components'
 import ImageSlider from './ImageSlider'
 import Movies from './Movies'
 import Viewers from './Viewers'
-import { useDispatch, useSelector } from 'react-redux'
-import { moviesAsync } from '../features/movie/movieSlice'
+import { useDispatch } from 'react-redux'
 import { onSnapshot, collection } from 'firebase/firestore';
 import db from '../firebase'
-import { setMovies, setLoading } from '../features/movie/movieSlice'
+import { setMovies } from '../features/movie/movieSlice'
 
 const Home = () => {
   const dispatch = useDispatch()
   const [error, setError] = useState(null);
-  // const loading = useSelector(setLoading)
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
+    setLoading(true)
     onSnapshot(
       collection(db, "movies"),
       (snapshot) => {
@@ -23,16 +23,15 @@ const Home = () => {
         dispatch(setMovies(tempMovies))
       },
       (error) => {
-        console.log(error)
+        setError(error)
       })
-    dispatch(moviesAsync())
-
-  });
+    setLoading(false)
+  },[dispatch]);
   return (
     <Container>
       <ImageSlider></ImageSlider>
       <Viewers></Viewers>
-      <Movies></Movies>
+      <Movies error={error} loading={loading}></Movies>
     </Container>
   )
 }
